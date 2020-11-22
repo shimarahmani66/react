@@ -1,15 +1,18 @@
 import React from 'react';
 
-const Person =({fullname,deleted,changed})=>{
+const Person =({delFullname,fullname,deleted,changed,edited,person1})=>{
 
 return(
 
 <div >
     <p>    
-    {`${fullname}  `}
+    
+     {(!delFullname) ? `${fullname}  `: ``}
+      <del>{`${delFullname}  `}</del>
     </p>
-<input type="text" placeholder={fullname} onChange={changed}/>
+<input type="text" placeholder={fullname} onChange={edited} value={person1}/>
 <button onClick={deleted}>حذف</button>
+<button onClick={changed}>ویرایش</button>
 </div>
 
 

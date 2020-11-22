@@ -1,7 +1,7 @@
 import React from 'react';
 import Person from "./Person";
-const Persons=({ persons,personDeleted,personchanged})=> {
-
+const Persons=({ persons,personDeleted,personchanged,setPerson1,person1})=> {
+    
     // constructor() {
     //     super();
     //     this.persons = persons;
@@ -14,8 +14,10 @@ const Persons=({ persons,personDeleted,personchanged})=> {
 
     // render() {
         return (
+           
             <div>
-                {persons.map(person => <Person key={person.id} fullname={person.fullname} deleted={()=>personDeleted(person.id)} changed={(event)=>personchanged(event,person.id)}/>)}
+                {console.log(person1)}
+                {persons.map(person => <Person key={person.id} fullname={person.fullname} delFullname={person.delFullname} deleted={()=>personDeleted(person.id)} changed={()=>personchanged(person.id)} edited={(event)=>setPerson1(event,person.id)} person1={person.id===person1.id?person1.value:""}/>)}
             </div>
 
         );
