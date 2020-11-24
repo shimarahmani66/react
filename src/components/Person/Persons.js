@@ -1,7 +1,23 @@
-import React from 'react';
+import React, { Component } from 'react';
+import SimpleContext from "./../../context/SimpleContext";
 import Person from "./Person";
-const Persons=({ persons,personDeleted,personchanged,setPerson1,person1})=> {
-    
+// const Persons=({ persons,personDeleted,personchanged,setPerson1,person1})=> {
+ class Persons extends Component{
+     render(){
+        return (
+            <SimpleContext.Consumer>{context=>(
+           
+            <div>
+                {/* { console.log(this..persons)} */}
+                {context.state.persons.map(person => <Person key={person.id} fullname={person.fullname} delFullname={person.delFullname} deleted={()=>context.handleDeletedPerson(person.id)} changed={()=>context.handleChangedPerson(person.id)} edited={(event)=>this.props.setPerson1(event,person.id)} person1={person.id===this.props.person1.id?this.props.person1.value:""}/>)}
+            </div>
+             )
+            }
+                    </SimpleContext.Consumer>
+
+        );
+     }
+ }   
     // constructor() {
     //     super();
     //     this.persons = persons;
@@ -13,16 +29,9 @@ const Persons=({ persons,personDeleted,personchanged,setPerson1,person1})=> {
     // }
 
     // render() {
-        return (
-           
-            <div>
-                {/* {console.log(person1)} */}
-                {persons.map(person => <Person key={person.id} fullname={person.fullname} delFullname={person.delFullname} deleted={()=>personDeleted(person.id)} changed={()=>personchanged(person.id)} edited={(event)=>setPerson1(event,person.id)} person1={person.id===person1.id?person1.value:""}/>)}
-            </div>
 
-        );
 
     // }
-}
+// }
 
 export default Persons;

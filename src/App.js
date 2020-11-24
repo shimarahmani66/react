@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import Persons from "./components/Person/Persons";
 import { ToastContainer, toast } from 'react-toastify';
+import SimpleContext from "./context/SimpleContext";
+import Header from './header/Header';
+import NewPerson from './components/Person/NewPerson';
+
 
 class App extends Component {
 
@@ -9,7 +13,8 @@ class App extends Component {
 
         person: "",
         person1: {},
-        showPersons: true
+        showPersons: true,
+        appTitle:'مدیریت برنامه ها'
     };
     handleShowPerson = () => {
         this.setState({ showPersons: !this.state.showPersons });
@@ -96,41 +101,26 @@ class App extends Component {
     }
     render() {
         let person = null;
-        let badgeStyle="";
+        // let badgeStyle="";
 
-        if(this.state.persons.length>=0){
-            badgeStyle="badge-danger";
-        }
-        if(this.state.persons.length>=2){
-            badgeStyle="badge-warning";
 
-        }
-        if(this.state.persons.length>=3){
-            badgeStyle="badge-success";
-
-        }
         if (this.state.showPersons) {
-            person = <Persons persons={this.state.persons} personDeleted={this.handleDeletedPerson} personchanged={this.handleChangedPerson} setPerson1={this.setPerson1} person1={this.state.person1} />;
+            person = <Persons setPerson1={this.setPerson1} person1={this.state.person1} />;
             // console.log('hi')
         }
         return (
-            <div className="rtl text-center">
-                <h2 className="alert alert-info">
-                    برنامه مدیریت برنامه ها
-                </h2>
-                <h5 className="alert alert-light">
-برای امروز <span className={`badge badge-pill ${badgeStyle}`}>{this.state.persons.length}</span> برنامه دارید
-                </h5>
+            <SimpleContext.Provider value={{
+                state:this.state,
+                handleDeletedPerson : this.handleDeletedPerson,
+                handleChangedPerson : this.handleChangedPerson,
+                handleNewPerson : this.handleNewPerson,
+                setPerson : this.setPerson
+            }}>
+                <div className="rtl text-center">
+               <Header>
+                </Header>              
                 <form onSubmit={event=>event.preventDefault()}>
-                    <div className="d-flex justify-content-center">
-                    <div className="input-group w-25 ">
-                    <input className="form-control" type="text" placeholder="ساخت برنامه جدید" onChange={this.setPerson} value={this.state.person} />
-                    <div className="input-group-prepend">
-                        <button type="submit" onClick={this.handleNewPerson} className="btn btn-success fa fa-plus" />    
-                    </div>
-                    
-                </div>
-                    </div>
+                   <NewPerson></NewPerson>
                 </form>
                 <div className="mt-3">
                     <button className={this.state.showPersons?"btn btn-success":"btn btn-danger"} onClick={this.handleShowPerson}>مدیریت برنامه ها</button>
@@ -138,7 +128,7 @@ class App extends Component {
                     <ToastContainer />
                 </div>
             </div>
-
+            </SimpleContext.Provider>
         );
     }
 }
