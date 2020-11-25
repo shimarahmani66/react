@@ -1,22 +1,22 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
 import SimpleContext from "./../../context/SimpleContext";
 import Person from "./Person";
- class Persons extends Component{
-    static contextType=SimpleContext;
+const Persons=({setPerson1,person1})=>{
+    const context=useContext(SimpleContext);
 
-     render(){
-        const {persons}=this.context.state;
+
+        const {persons}=context;
         return (
 
            
             <div>
-                {/* { console.log(this..persons)} */}
-                {persons.map(person => <Person key={person.id} fullname={person.fullname} delFullname={person.delFullname} deleted={()=>this.context.handleDeletedPerson(person.id)} changed={()=>this.context.handleChangedPerson(person.id)} edited={(event)=>this.props.setPerson1(event,person.id)} person1={person.id===this.props.person1.id?this.props.person1.value:""}/>)}
+                { console.log(person1)}
+                {persons.map(person => <Person key={person.id} fullname={person.fullname} delFullname={person.delFullname} deleted={()=>context.handleDeletedPerson(person.id)} changed={()=>context.handleChangedPerson(person.id)} edited={(event)=>setPerson1(event,person.id)} person1={person.id===person1.id?person1.value:""}/>)}
             </div>
           
 
         );
-     }
+
  }   
 
 export default Persons;

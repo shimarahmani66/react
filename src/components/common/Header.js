@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
 import SimpleContext from "../../context/SimpleContext";
 // const Persons=({ persons,personDeleted,personchanged,setPerson1,person1})=> {
-class Header extends Component {
-    static contextType=SimpleContext;
-    render() {
-        const {persons,appTitle}=this.context.state;
+const Header =(props)=> {
+    const context=useContext(SimpleContext);
+    
+
+        const {persons}=context;
         let badgeStyle="";
         if(persons.length<=1){
             badgeStyle="badge-danger";
@@ -22,7 +23,7 @@ class Header extends Component {
   
         <div>
         <h2 className="alert alert-info">
-            {appTitle}
+            {props.appTitle}
         </h2>
         <h5 className="alert alert-light">
             برای امروز <span className={`badge badge-pill ${badgeStyle}`}>{persons.length}</span> برنامه دارید
@@ -31,6 +32,6 @@ class Header extends Component {
       
 
         );
-    }}
+    }
 export default Header;
 
